@@ -2,6 +2,8 @@ import * as THREE from 'three';
 
 export default class SceneSubject {
 
+  speed = 1;
+
   constructor(scene) {
     this.mesh = new THREE.Mesh(
       new THREE.IcosahedronGeometry(2, 1),
@@ -12,10 +14,11 @@ export default class SceneSubject {
     scene.add(this.mesh);
   }
 
-  update(time) {
+  update(delta, time) {
     const scale = Math.sin(time) + 2;
 
     this.mesh.scale.set(scale, scale, scale);
+    this.mesh.rotation.y += this.speed * delta;
   }
 
 }

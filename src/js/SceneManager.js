@@ -69,9 +69,10 @@ export default class SceneManager {
   }
 
   update() {
-    const elapsedTime = this.clock.getElapsedTime();
+    const delta = this.clock.getDelta();
+    const elapsed = this.clock.getElapsedTime();
 
-    this.sceneSubjects.map(subject => subject.update(elapsedTime));
+    this.sceneSubjects.map(s => s.update ? s.update(delta, elapsed) : null);
 
     this.renderer.render(
       this.scene, 
