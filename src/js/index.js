@@ -1,7 +1,7 @@
 import SceneManager from './SceneManager';
 
 const canvas = document.getElementById('canvas');
-const sceneManager = new SceneManager(canvas);
+const sceneManager = new SceneManager(canvas, true);
 
 const resizeCanvas = () => {
   canvas.style.width = '100%';

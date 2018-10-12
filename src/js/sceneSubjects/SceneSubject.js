@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export default class SceneSubject {
 
-  speed = 1;
+  speed = 0.2;
 
   constructor(scene) {
     this.mesh = new THREE.Mesh(
@@ -15,7 +15,7 @@ export default class SceneSubject {
   }
 
   update(delta, time) {
-    const scale = Math.sin(time) + 2;
+    const scale = Math.sin(time) + 3;
 
     this.mesh.scale.set(scale, scale, scale);
     this.mesh.rotation.y += this.speed * delta;

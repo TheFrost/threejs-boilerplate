@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import Stats from 'stats.js';
 
 // subjects
 import GeneralLights from './sceneSubjects/GeneralLights';
@@ -46,6 +47,11 @@ export default class SceneManager {
     return camera;
   }
 
+  buildStats = () => {
+    this.stats = new Stats();
+    document.body.appendChild(this.stats.dom);
+  }
+
   createSceneSubjects = scene => {
     const sceneSubjects = [
       new GeneralLights(scene),
@@ -55,7 +61,8 @@ export default class SceneManager {
     return sceneSubjects;
   }
 
-  constructor(canvas) {
+  constructor(canvas, debugMode = false) {
+    this.debugMode = debugMode;
     this.canvas = canvas;
     this.screenDimentions = {
       width: this.canvas.width,
@@ -66,9 +73,12 @@ export default class SceneManager {
     this.renderer = this.buildRender(this.screenDimentions);
     this.camera = this.buildCamera(this.screenDimentions);
     this.sceneSubjects = this.createSceneSubjects(this.scene);
+    if (debugMode) this.buildStats();
   }
 
   update() {
+    if (this.debugMode) this.stats.begin();
+
     const delta = this.clock.getDelta();
     const elapsed = this.clock.getElapsedTime();
 
@@ -78,6 +88,8 @@ export default class SceneManager {
       this.scene, 
       this.camera
     );
+
+    if (this.debugMode) this.stats.end();
   }
 
   resizeHandler() {
