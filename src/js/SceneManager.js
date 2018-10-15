@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import Stats from 'stats.js';
 
 // subjects
-import GeneralLights from './sceneSubjects/GeneralLights';
 import SceneSubject from './sceneSubjects/SceneSubject';
 
 export default class SceneManager {
@@ -43,6 +42,7 @@ export default class SceneManager {
       nearPlane, 
       farPlane
     );
+    camera.position.z = 20;
 
     return camera;
   }
@@ -54,7 +54,6 @@ export default class SceneManager {
 
   createSceneSubjects = scene => {
     const sceneSubjects = [
-      new GeneralLights(scene),
       new SceneSubject(scene)
     ];
 

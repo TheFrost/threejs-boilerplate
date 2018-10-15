@@ -1,24 +1,37 @@
 import * as THREE from 'three';
 
+// shaders
+import vertexShader from '../../shaders/vertexShader.glsl';
+import fragmentShader from '../../shaders/fragmentShader.glsl';
+
 export default class SceneSubject {
 
-  speed = 0.2;
-
   constructor(scene) {
-    this.mesh = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(2, 1),
-      new THREE.MeshStandardMaterial({ flatShading: true })
-    );
-    this.mesh.position.set(0, 0, -20);
+    const geometry = new THREE.IcosahedronGeometry(5, 1);
+    geometry.computeFlatVertexNormals();
+
+    const material = new THREE.RawShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        }
+      },
+      side: THREE.DoubleSide
+    });
+
+    this.mesh = new THREE.Mesh(geometry, material);
 
     scene.add(this.mesh);
   }
 
   update(delta, time) {
-    const scale = Math.sin(time) + 3;
+    const { uniforms } = this.mesh.material;
+    uniforms.time.value = time * 2;
 
-    this.mesh.scale.set(scale, scale, scale);
-    this.mesh.rotation.y += this.speed * delta;
+    this.mesh.rotation.y += delta * 0.1;
   }
 
 }
