@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 import Stats from 'stats.js';
+import OrbitControlsModule from 'three-orbit-controls';
+
+const OrbitControls = OrbitControlsModule(THREE);
 
 // subjects
 import SceneSubject from './sceneSubjects/SceneSubject';
@@ -52,6 +55,10 @@ export default class SceneManager {
     document.body.appendChild(this.stats.dom);
   }
 
+  buildOrbitControls = (camera) => {
+    return new OrbitControls(camera);
+  }
+
   createSceneSubjects = scene => {
     const sceneSubjects = [
       new SceneSubject(scene)
@@ -72,7 +79,10 @@ export default class SceneManager {
     this.renderer = this.buildRender(this.screenDimentions);
     this.camera = this.buildCamera(this.screenDimentions);
     this.sceneSubjects = this.createSceneSubjects(this.scene);
-    if (debugMode) this.buildStats();
+    if (debugMode) {
+      this.buildStats();
+      this.buildOrbitControls(this.camera);
+    }
   }
 
   update() {
