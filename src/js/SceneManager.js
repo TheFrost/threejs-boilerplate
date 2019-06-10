@@ -1,115 +1,115 @@
-import * as THREE from 'three';
-import Stats from 'stats.js';
-import OrbitControlsModule from 'three-orbit-controls';
-
-const OrbitControls = OrbitControlsModule(THREE);
+import * as THREE from 'three'
+import Stats from 'stats.js'
+import OrbitControlsModule from 'three-orbit-controls'
 
 // subjects
-import SceneSubject from './sceneSubjects/SceneSubject';
+import SceneSubject from './sceneSubjects/SceneSubject'
+
+const OrbitControls = OrbitControlsModule(THREE)
 
 export default class SceneManager {
+  clock = new THREE.Clock()
 
-  clock = new THREE.Clock();
-  
   buildScene = () => {
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color('#000');
+    const scene = new THREE.Scene()
+    scene.background = new THREE.Color('#000')
 
-    return scene;
+    return scene
   }
 
   buildRender = ({ width, height }) => {
-    const renderer = new THREE.WebGLRenderer({ 
-      canvas, 
-      antialias: true, 
-      alpha: true 
-    });
-    const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
-    renderer.setPixelRatio(DPR);
-    renderer.setSize(width, height);
+    const { canvas } = this
 
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true
+    })
+    const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1
+    renderer.setPixelRatio(DPR)
+    renderer.setSize(width, height)
 
-    return renderer;
+    renderer.gammaInput = true
+    renderer.gammaOutput = true
+
+    return renderer
   }
 
   buildCamera = ({ width, height }) => {
-    const aspectRatio = width / height;
-    const fieldOfView = 60;
-    const nearPlane = 1;
-    const farPlane = 100;
+    const aspectRatio = width / height
+    const fieldOfView = 60
+    const nearPlane = 1
+    const farPlane = 100
     const camera = new THREE.PerspectiveCamera(
-      fieldOfView, 
-      aspectRatio, 
-      nearPlane, 
+      fieldOfView,
+      aspectRatio,
+      nearPlane,
       farPlane
-    );
-    camera.position.z = 20;
+    )
+    camera.position.z = 20
 
-    return camera;
+    return camera
   }
 
   buildStats = () => {
-    this.stats = new Stats();
-    document.body.appendChild(this.stats.dom);
+    this.stats = new Stats()
+    document.body.appendChild(this.stats.dom)
   }
 
   buildOrbitControls = (camera) => {
-    return new OrbitControls(camera);
+    return new OrbitControls(camera)
   }
 
   createSceneSubjects = scene => {
     const sceneSubjects = [
       new SceneSubject(scene)
-    ];
+    ]
 
-    return sceneSubjects;
+    return sceneSubjects
   }
 
-  constructor(canvas, debugMode = false) {
-    this.debugMode = debugMode;
-    this.canvas = canvas;
+  constructor (canvas, debugMode = false) {
+    this.debugMode = debugMode
+    this.canvas = canvas
     this.screenDimentions = {
       width: this.canvas.width,
       height: this.canvas.height
     }
-  
-    this.scene = this.buildScene();
-    this.renderer = this.buildRender(this.screenDimentions);
-    this.camera = this.buildCamera(this.screenDimentions);
-    this.sceneSubjects = this.createSceneSubjects(this.scene);
+
+    this.scene = this.buildScene()
+    this.renderer = this.buildRender(this.screenDimentions)
+    this.camera = this.buildCamera(this.screenDimentions)
+    this.sceneSubjects = this.createSceneSubjects(this.scene)
     if (debugMode) {
-      this.buildStats();
-      this.buildOrbitControls(this.camera);
+      this.buildStats()
+      this.buildOrbitControls(this.camera)
     }
   }
 
-  update() {
-    if (this.debugMode) this.stats.begin();
+  update () {
+    if (this.debugMode) this.stats.begin()
 
-    const delta = this.clock.getDelta();
-    const elapsed = this.clock.getElapsedTime();
+    const delta = this.clock.getDelta()
+    const elapsed = this.clock.getElapsedTime()
 
-    this.sceneSubjects.map(s => s.update ? s.update(delta, elapsed) : null);
+    this.sceneSubjects.map(s => s.update ? s.update(delta, elapsed) : null)
 
     this.renderer.render(
-      this.scene, 
+      this.scene,
       this.camera
-    );
+    )
 
-    if (this.debugMode) this.stats.end();
+    if (this.debugMode) this.stats.end()
   }
 
-  resizeHandler() {
-    const { width, height } = this.canvas;
+  resizeHandler () {
+    const { width, height } = this.canvas
 
-    this.screenDimentions = { width, height };
+    this.screenDimentions = { width, height }
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    this.camera.aspect = width / height
+    this.camera.updateProjectionMatrix()
 
-    this.renderer.setSize(width, height);
+    this.renderer.setSize(width, height)
   }
-
 }

@@ -1,27 +1,27 @@
-import SceneManager from './SceneManager';
+import SceneManager from './SceneManager'
 
-const canvas = document.getElementById('canvas');
-const sceneManager = new SceneManager(canvas, true);
+const canvas = document.getElementById('canvas')
+const sceneManager = new SceneManager(canvas, true)
 
 const resizeCanvas = () => {
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
+  canvas.style.width = '100%'
+  canvas.style.height = '100%'
 
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
+  canvas.width = canvas.offsetWidth
+  canvas.height = canvas.offsetHeight
 
-  sceneManager.resizeHandler();
+  sceneManager.resizeHandler()
 }
 
 const bindEvents = () => {
-  window.onresize = resizeCanvas;
-  resizeCanvas();
+  window.onresize = resizeCanvas
+  resizeCanvas()
 }
 
 const render = () => {
-  window.requestAnimationFrame(render);
-  sceneManager.update();
+  window.requestAnimationFrame(render)
+  sceneManager.update()
 }
 
-bindEvents();
-render();
+bindEvents()
+render()
