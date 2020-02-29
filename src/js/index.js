@@ -1,4 +1,4 @@
-import SceneManager from './SceneManager'
+import SceneManager from './webgl/SceneManager'
 
 const canvas = document.getElementById('canvas')
 const sceneManager = new SceneManager(canvas, true)

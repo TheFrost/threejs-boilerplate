@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 
 // shaders
-import vertexShader from '../../shaders/vertexShader.glsl'
-import fragmentShader from '../../shaders/fragmentShader.glsl'
+import vertexShader from '../shaders/vertexShader.glsl'
+import fragmentShader from '../shaders/fragmentShader.glsl'
 
 export default class SceneSubject {
   constructor (scene) {
