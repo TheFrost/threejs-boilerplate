@@ -29,9 +29,6 @@ export default class SceneManager {
     renderer.setPixelRatio(DPR)
     renderer.setSize(width, height)
 
-    renderer.gammaInput = true
-    renderer.gammaOutput = true
-
     return renderer
   }
 
