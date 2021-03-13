@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "stats.js": "^0.17.0",
-    "three": "^0.125.0",
-    "three-orbit-controls": "^82.1.0"
+    "three": "^0.125.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

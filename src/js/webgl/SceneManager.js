@@ -1,11 +1,9 @@
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'stats.js'
-import OrbitControlsModule from 'three-orbit-controls'
 
 // subjects
 import SceneSubject from './sceneSubjects/SceneSubject'
-
-const OrbitControls = OrbitControlsModule(THREE)
 
 export default class SceneManager {
   clock = new THREE.Clock()
@@ -53,8 +51,8 @@ export default class SceneManager {
     document.body.appendChild(this.stats.dom)
   }
 
-  buildOrbitControls = (camera) => {
-    return new OrbitControls(camera)
+  buildOrbitControls = (camera, domElement) => {
+    return new OrbitControls(camera, domElement)
   }
 
   createSceneSubjects = scene => {
@@ -79,7 +77,7 @@ export default class SceneManager {
     this.sceneSubjects = this.createSceneSubjects(this.scene)
     if (debugMode) {
       this.buildStats()
-      this.buildOrbitControls(this.camera)
+      this.buildOrbitControls(this.camera, this.renderer.domElement)
     }
   }
 
