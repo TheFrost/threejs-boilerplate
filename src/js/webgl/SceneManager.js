@@ -32,8 +32,8 @@ export default class SceneManager {
 
   buildCamera = ({ width, height }) => {
     const aspectRatio = width / height
-    const fieldOfView = 60
-    const nearPlane = 1
+    const fieldOfView = 50
+    const nearPlane = 0.1
     const farPlane = 100
     const camera = new THREE.PerspectiveCamera(
       fieldOfView,
@@ -41,9 +41,17 @@ export default class SceneManager {
       nearPlane,
       farPlane
     )
-    camera.position.z = 20
+    camera.position.z = 5
+    camera.position.y = 1
 
     return camera
+  }
+
+  buildHelpers = () => {
+    const gridHelper = new THREE.GridHelper(10, 10)
+    this.scene.add(gridHelper)
+    const axesHelper = new THREE.AxesHelper(5)
+    this.scene.add(axesHelper)
   }
 
   buildStats = () => {
@@ -74,6 +82,7 @@ export default class SceneManager {
     this.scene = this.buildScene()
     this.renderer = this.buildRender(this.screenDimentions)
     this.camera = this.buildCamera(this.screenDimentions)
+    this.buildHelpers()
     this.sceneSubjects = this.createSceneSubjects(this.scene)
     if (debugMode) {
       this.buildStats()
