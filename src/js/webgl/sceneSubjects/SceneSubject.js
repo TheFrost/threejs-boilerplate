@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { gui } from '../utils/tools'
 
 import vertexShader from '../shaders/vertexShader.glsl'
 import fragmentShader from '../shaders/fragmentShader.glsl'
@@ -15,6 +16,11 @@ export default class SceneSubject {
     })
 
     this.mesh = new THREE.Mesh(geometry, material)
+
+    // gui
+    gui.add(this.mesh.position, 'x').min(-5).max(5).step(0.001)
+    gui.add(this.mesh.position, 'y').min(-5).max(5).step(0.001)
+    gui.add(this.mesh.position, 'z').min(-5).max(5).step(0.001)
 
     scene.add(this.mesh)
   }
