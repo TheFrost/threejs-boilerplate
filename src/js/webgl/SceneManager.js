@@ -23,8 +23,9 @@ export default class SceneManager {
       antialias: true,
       alpha: true
     })
-    const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1
-    renderer.setPixelRatio(DPR)
+    renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio, 2)
+    )
     renderer.setSize(width, height)
 
     return renderer
@@ -114,6 +115,9 @@ export default class SceneManager {
     this.camera.aspect = width / height
     this.camera.updateProjectionMatrix()
 
+    this.renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio, 2)
+    )
     this.renderer.setSize(width, height)
   }
 }
