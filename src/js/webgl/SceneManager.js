@@ -61,7 +61,10 @@ export default class SceneManager {
   }
 
   buildOrbitControls = (camera, domElement) => {
-    return new OrbitControls(camera, domElement)
+    const controls = new OrbitControls(camera, domElement)
+    controls.enableDamping = true
+
+    return controls
   }
 
   createSceneSubjects = scene => {
@@ -85,9 +88,9 @@ export default class SceneManager {
     this.camera = this.buildCamera(this.screenDimentions)
     this.buildHelpers()
     this.sceneSubjects = this.createSceneSubjects(this.scene)
+    this.orbitControls = this.buildOrbitControls(this.camera, this.renderer.domElement)
     if (debugMode) {
       this.buildStats()
-      this.buildOrbitControls(this.camera, this.renderer.domElement)
     }
   }
 
@@ -103,6 +106,8 @@ export default class SceneManager {
       this.scene,
       this.camera
     )
+
+    this.orbitControls.update()
 
     if (this.debugMode) this.stats.end()
   }
