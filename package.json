@@ -10,6 +10,8 @@
     "build": "rm -rf dist/; parcel build --public-url '.' --no-source-maps"
   },
   "dependencies": {
+    "cannon-es": "^0.18.0",
+    "cannon-es-debugger": "^0.1.4",
     "stats.js": "^0.17.0",
     "three": "latest",
     "tweakpane": "^3.0.5"
